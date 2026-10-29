@@ -22,7 +22,8 @@ function card(g, i) {
   const el = document.createElement("article");
   el.className = "card";
   const cc = CONSOLE_CLASS[g.console] || "PS2";
-  const coverStyle = g.cover ? `style="background-image:url('${g.cover}')"` : "";
+  const src = g.cover ? (typeof COVERS !== "undefined" && COVERS[g.cover] ? COVERS[g.cover] : g.cover) : null;
+  const coverStyle = src ? `style="background-image:url('${src}')"` : "";
   const placeholder = g.cover ? "" : `<div class="ph"><div class="console-tag">${cc === "GBC" ? "GBC" : g.console.split(" ")[0]}</div><div class="ptitle">${g.title}</div><div class="nocover">arte não disponível</div></div>`;
   el.innerHTML = `
     <div class="cover" ${coverStyle}>
