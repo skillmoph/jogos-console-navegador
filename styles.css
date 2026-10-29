@@ -25,7 +25,7 @@ main { max-width:1060px; margin:0 auto; padding:10px 20px 40px; }
 .cover .ph .console-tag { font-size:28px; font-weight:800; letter-spacing:.04em; opacity:.9; }
 .cover .ph .ptitle { color:var(--muted); font-size:13px; margin-top:6px; }
 .cover .ph .nocover { color:var(--muted); font-size:10.5px; opacity:.75; margin-top:8px; letter-spacing:.05em; text-transform:uppercase; }
-.pill { position:absolute; top:10px; left:10px; font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; color:#fff; background:#444; }
+.pill { position:absolute; top:10px; left:10px; font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; color:#fff; background:#444; max-width:calc(100% - 96px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .pill.PS2 { background:var(--ps2); } .pill.PSP { background:var(--psp); } .pill.PS1 { background:var(--ps1); }
 .pill.Xbox { background:var(--xbox); } .pill.N64 { background:var(--n64); color:#231a05; }
 .pill.GBC { background:var(--gbc); } .pill.NES { background:var(--nes); }
