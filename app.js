@@ -40,7 +40,7 @@ function card(g, i) {
       </div>
       <p class="note">${g.note}</p>
       <div class="actions">
-        <a class="play" href="${g.url}" target="_blank" rel="noopener">▶ Jogar</a>
+        <a class="${g.exp ? 'play exp' : 'play'}" href="${g.url}" target="_blank" rel="noopener">${g.exp ? 'Experimentar' : '▶ Jogar'}</a>
         <a class="src" href="${g.source}" target="_blank" rel="noopener">projeto</a>
       </div>
     </div>`;
@@ -55,6 +55,8 @@ function render() {
     .filter(({ g }) => (state.console === "Todos" || g.console === state.console || g.console.startsWith(state.console))
                    && (state.genre === "Todos" || g.genre === state.genre));
   list.forEach(({ g, i }) => grid.appendChild(card(g, i)));
-  document.getElementById("count").textContent = `${list.length} de ${GAMES.length} jogos`;
+  const jogos = list.filter(({ g }) => !g.exp).length;
+  const exps = list.filter(({ g }) => g.exp).length;
+  document.getElementById("count").textContent = exps ? `${jogos} jogos + ${exps} experimentais` : `${jogos} jogos`;
 }
 render();
