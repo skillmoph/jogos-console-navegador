@@ -39,6 +39,7 @@ main { max-width:1060px; margin:0 auto; padding:10px 20px 40px; }
 .badge.req { color:#ffd37a; border-color:#4a3d1e; }
 .note { color:var(--muted); font-size:13px; }
 .actions { margin-top:auto; display:flex; gap:8px; align-items:center; padding-top:6px; }
+.play.exp { background:#8a6312; }
 .play { flex:1; text-align:center; background:var(--accent); color:#fff; text-decoration:none; font-weight:700; padding:11px 12px; border-radius:10px; font-size:15px; }
 .play:hover { filter:brightness(1.1); }
 .src { color:var(--muted); font-size:12px; text-decoration:none; border-bottom:1px dotted var(--muted); white-space:nowrap; }
