@@ -120,7 +120,8 @@ function render(){
   const main=$("#secoes"); main.innerHTML="";
   const list=filtered();
   const jogos=list.filter(({g})=>!g.exp).length, exps=list.filter(({g})=>g.exp).length;
-  $("#count").textContent=exps?`${jogos} jogos + ${exps} experimentais`:`${jogos} jogos`;
+  const cnt=exps?`${jogos} jogos + ${exps} experimentais`:`${jogos} jogos`;
+  $("#count").textContent=cnt; const tb=$("#count-tb"); if(tb) tb.textContent=cnt;
 
   if(state.console==="Todos"&&state.genre==="Todos"&&!state.query.trim()){
     const cats={}; GAMES.forEach(g=>cats[g.genre]=(cats[g.genre]||0)+1);
