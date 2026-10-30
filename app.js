@@ -1,4 +1,4 @@
-const CONSOLE_CLASS = { "PS2":"PS2", "PSP":"PSP", "PS1":"PS1", "Xbox":"Xbox", "N64":"N64", "Game Boy Color":"GBC", "NES":"NES" };
+const CONSOLE_CLASS = { "PS2":"PS2", "PS2 / Xbox / PC":"PS2", "PS1 / Saturn / PC":"PS1", "PSP":"PSP", "PS1":"PS1", "Xbox":"Xbox", "N64":"N64", "SNES":"SNES", "Mega Drive":"MD", "PC":"PC", "Game Boy Color":"GBC", "Game Boy":"GB", "GBA":"GBA", "NES":"NES" };
 const state = { console:"Todos", genre:"Todos" };
 
 function chip(row, label, key) {
