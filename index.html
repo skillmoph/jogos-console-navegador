@@ -3,41 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogos de console no navegador — catálogo verificado (21 jogos + 6 experimentais)</title>
-<meta name="description" content="Jogos de PS1, Xbox, N64 e NES adaptados pela comunidade para rodar direto no navegador. Links verificados, sem instalar nada.">
+<title>Apocalipse Games — jogos de console no navegador</title>
+<meta name="description" content="Jogos de PS1, Xbox, N64, PS2 e mais adaptados pela comunidade para rodar direto no navegador. Destinos conferidos um a um, sem instalar nada.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="hero">
-  <div class="apoc-hero" id="apoc-hero">
-    <div class="apoc-bg" id="apoc-bg"></div>
-      <div class="apoc-tx">
-      <div class="apoc-kicker">catálogo de jogos no navegador</div>
-      <div class="apoc-title">Apocalipse Games</div>
-    </div>
-    <img class="apoc-ph" id="apoc-ph" alt="Foto de capa do site">
-  </div>
-  <p class="eyebrow">Catálogo verificado em 29 de outubro de 2026 · 21 jogos + 6 experimentais</p>
-  <h1>Jogos de console no navegador</h1>
-  <p class="sub">Clássicos de PS1, Xbox, N64, SNES, Mega Drive e NES adaptados pela comunidade para rodar na aba do navegador. Alguns pedem arquivos do seu próprio jogo (dizemos quais). Os botões abrem os sites dos projetos.</p>
-  <details class="hero-note">
-    <summary><strong>Como esta lista foi feita</strong></summary>
-    Cada destino foi aberto e conferido um a um. Confirmamos que a página oferece o jogo no navegador e quais são os requisitos; as partidas em si não foram testadas, então algum jogo pode falhar na hora de rodar. Salvo indicação no card, os projetos não são oficiais das donas dos jogos.
-  </details>
-</header>
-
-<nav class="filters" aria-label="Filtros">
-  <div class="filter-row" id="console-filters"><span class="filter-label">Console</span></div>
-  <div class="filter-row" id="genre-filters"><span class="filter-label">Gênero</span></div>
+<nav id="topbar">
+  <a class="brand" id="brand" href="#"><span class="mark">A</span>Apocalipse<em>Games</em></a>
+  <span id="count-tb"></span>
+  <span class="sp"></span>
+  <input id="q-top" type="search" placeholder="Buscar jogo..." aria-label="Buscar jogo">
+  <button class="tb" id="btn-howto">Como esta lista foi feita</button>
+  <button class="tb cta" id="btn-all">Ver jogos</button>
 </nav>
-
-<main>
-  <p class="count" id="count"></p>
-  <section class="grid" id="grid"></section>
-
-  <section class="gap">
-    <h2>Sobre esta coleção</h2>
-    <p>Esta coleção lista jogos de console adaptados pela comunidade para rodar no navegador: projetos de código aberto, versões clean-room sem ROM distribuída, ou páginas que exigem seus próprios arquivos. Publicamos 20 jogos com destino conferido e 5 experimentais (projetos em estágio inicial, marcados nos cards). Não confirmamos o licenciamento de nenhum destino. A pesquisa de títulos mais atuais continua e a lista cresce conforme novos destinos são verificados. Candidatos que ficaram de fora até agora:</p>
+<div class="wrap">
+  <div class="headline">
+    <h1>Jogos de console, direto no navegador.</h1>
+    <p>Clássicos e ports recentes de PS1, Xbox, N64, SNES, Mega Drive, PS2 e mais, adaptados pela comunidade para rodar na aba do navegador. Alguns pedem arquivos do seu próprio jogo (dizemos quais).</p>
+  </div>
+  <div id="howto"><p><strong>Como esta lista foi feita:</strong> cada destino foi aberto e conferido um a um. Confirmamos que a página oferece o jogo no navegador e quais são os requisitos; as partidas em si nem sempre foram testadas, então algum jogo pode falhar na hora de rodar. Salvo indicação no card, os projetos não são oficiais das donas dos jogos.</p>
+<p style="margin-top:8px">Detalhes de cada jogo (procedência, requisitos, origem dos arquivos) ficam no card expandido: clique em qualquer capa.</p></div>
+  <div id="car">
+    <div id="car-track"></div>
+    <button id="car-prev" aria-label="anterior">&#8249;</button>
+    <button id="car-next" aria-label="próximo">&#8250;</button>
+    <div id="car-dots"></div>
+  </div>
+  <div id="q-wrap"><input id="q-row" type="search" placeholder="Buscar jogo..." aria-label="Buscar jogo"></div>
+  <div id="chips"></div>
+  <p id="count"></p>
+  <main id="secoes"></main>
+  <details class="about" id="about"><summary><strong>Sobre esta coleção — o que ficou de fora e por quê</strong></summary><div class="about-in">
+    
+    <p>Esta coleção lista jogos de console adaptados pela comunidade para rodar no navegador: projetos de código aberto, versões clean-room sem ROM distribuída, ou páginas que exigem seus próprios arquivos. Não confirmamos o licenciamento de nenhum destino. Candidatos que ficaram de fora até agora:</p>
     <ul>
       <li><strong>Licenciamento não confirmado:</strong> sites que transmitem jogos comerciais de PS2 e PSP inteiros (Tekken 5, SSX 3, Formula One 06, WWE SmackDown vs RAW, PES 6) sem mostrar autorização das donas. Suspendemos esses links até confirmar a situação.</li>
       <li><strong>Fora do ar hoje:</strong> as versões clean-room de Mario Kart 64, F-Zero X, Banjo-Kazooie, Super Mario World, Super Mario Bros e Pokémon Red/Blue estão fora do ar (erro 404) na data da verificação — voltam à lista se retornarem.</li>
@@ -48,24 +49,22 @@
       <li><strong>Não é site para jogar:</strong> Gran Turismo 4 de PS2 roda no navegador por recompilação, mas o projeto gera a página no seu computador a partir do seu disco — não existe um link pronto.</li>
     </ul>
     <p>Conforme os projetos amadurecerem, o licenciamento for confirmado e novos ports forem verificados, esta lista cresce.</p>
-  </section>
-</main>
-<footer>
-  <p>Artes de capa: arquivos dos artigos correspondentes na Wikipédia (upload.wikimedia.org), usadas para identificação; capas do Minecraft e do NFS Most Wanted solo: captura/arte das próprias páginas dos projetos.</p>
-  <p>Catálogo independente, sem fins lucrativos. Os nomes dos jogos pertencem aos seus donos. Nenhum jogo é hospedado aqui: os botões abrem os sites de cada projeto. Verificado em 29/10/2026; páginas conferidas, partidas não testadas.</p>
-
+  </div></details>
+  <footer><p>Artes de capa: arquivos dos artigos correspondentes na Wikipédia (upload.wikimedia.org), usadas para identificação; capas do Minecraft e do NFS Most Wanted solo: captura/arte das próprias páginas dos projetos.</p>
+  <p>Catálogo independente, sem fins lucrativos. Os nomes dos jogos pertencem aos seus donos. Nenhum jogo é hospedado aqui: os botões abrem os sites de cada projeto. Verificado em 29/10/2026; páginas conferidas, partidas não testadas.</p></footer>
+</div>
+<div id="modal"><div class="bk"></div><div class="box"><button id="m-close" aria-label="fechar">&#10005;</button><div id="m-cover"></div><div id="m-body"></div></div></div>
 
 <script src="covers-a.js"></script>
 <script src="covers-b.js"></script>
-  <script src="covers-c.js"></script>
-  <script src="covers-d.js"></script>
-  <script src="covers-e.js"></script>
-  <script src="covers-f.js"></script>
-  <script src="covers-g.js"></script>
-  <script src="covers-h.js"></script>
+<script src="covers-c.js"></script>
+<script src="covers-d.js"></script>
+<script src="covers-e.js"></script>
+<script src="covers-f.js"></script>
+<script src="covers-g.js"></script>
+<script src="covers-h.js"></script>
 <script src="hero-img.js"></script>
 <script src="data.js"></script>
-<script>document.getElementById("apoc-bg").style.backgroundImage="url('"+HERO_IMG+"')";document.getElementById("apoc-ph").src=HERO_IMG;</script>
 <script src="app.js"></script>
 </body>
 </html>
