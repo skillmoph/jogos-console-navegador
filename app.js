@@ -14,7 +14,8 @@ function renderFilters() {
   const gr = document.getElementById("genre-filters");
   cr.querySelectorAll(".chip").forEach(e => e.remove());
   gr.querySelectorAll(".chip").forEach(e => e.remove());
-  CONSOLES.forEach(c => chip(cr, c, "console"));
+  const consoles = [...new Set(GAMES.flatMap(g => g.console.split(" / ")))].sort();
+  ["Todos", ...consoles].forEach(c => chip(cr, c, "console"));
   GENRES.forEach(g => chip(gr, g, "genre"));
 }
 
@@ -52,7 +53,7 @@ function render() {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
   const list = GAMES.map((g, i) => ({ g, i }))
-    .filter(({ g }) => (state.console === "Todos" || g.console === state.console || g.console.startsWith(state.console))
+    .filter(({ g }) => (state.console === "Todos" || g.console.split(" / ").includes(state.console))
                    && (state.genre === "Todos" || g.genre === state.genre));
   list.forEach(({ g, i }) => grid.appendChild(card(g, i)));
   const jogos = list.filter(({ g }) => !g.exp).length;
