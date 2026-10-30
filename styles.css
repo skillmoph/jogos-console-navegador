@@ -11,7 +11,7 @@ h1 { font-size:clamp(28px,6vw,44px); line-height:1.15; margin-bottom:12px; }
 .sub { color:var(--muted); max-width:720px; font-size:17px; }
 .hero-note { background:var(--panel); border:1px solid var(--hair); border-radius:12px; padding:14px 16px; margin-top:20px; color:var(--muted); font-size:14px; max-width:860px; }
 .hero-note strong { color:var(--ink); }
-.filters { max-width:1060px; margin:0 auto; padding:6px 20px 4px; position:sticky; top:0; background:linear-gradient(var(--bg) 82%, transparent); z-index:5; }
+.filters { max-width:1060px; margin:0 auto; padding:6px 20px 4px; }
 .filter-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:8px 0; }
 .filter-label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em; margin-right:4px; }
 .chip { border:1px solid var(--hair); background:var(--panel); color:var(--muted); border-radius:999px; padding:8px 14px; font-size:14px; cursor:pointer; min-height:40px; }
@@ -29,6 +29,7 @@ main { max-width:1060px; margin:0 auto; padding:10px 20px 40px; }
 .pill.PS2 { background:var(--ps2); } .pill.PSP { background:var(--psp); } .pill.PS1 { background:var(--ps1); }
 .pill.Xbox { background:var(--xbox); } .pill.N64 { background:var(--n64); color:#231a05; }
 .pill.GBC { background:var(--gbc); } .pill.NES { background:var(--nes); }
+.pill.SNES { background:#7b2ff7; } .pill.MD { background:#1c3faa; } .pill.PC { background:#444c56; } .pill.GBA { background:#5b2c82; } .pill.GB { background:#3a5f2a; }
 .mp { position:absolute; top:10px; right:10px; font-size:11px; font-weight:700; padding:4px 9px; border-radius:999px; background:rgba(20,24,32,.85); color:var(--accent2); border:1px solid var(--hair); }
 .body { padding:14px 14px 16px; display:flex; flex-direction:column; gap:8px; flex:1; }
 .title { font-size:17px; font-weight:700; line-height:1.3; }
