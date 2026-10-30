@@ -9,6 +9,8 @@ body { background:var(--bg); color:var(--ink); font:16px/1.55 -apple-system, "Se
 .eyebrow { color:var(--accent2); font-size:13px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px; }
 h1 { font-size:clamp(28px,6vw,44px); line-height:1.15; margin-bottom:12px; }
 .sub { color:var(--muted); max-width:720px; font-size:17px; }
+.hero-note summary { cursor:pointer; }
+.hero-note[open] summary { margin-bottom:5px; }
 .hero-note { background:var(--panel); border:1px solid var(--hair); border-radius:12px; padding:14px 16px; margin-top:20px; color:var(--muted); font-size:14px; max-width:860px; }
 .hero-note strong { color:var(--ink); }
 .filters { max-width:1060px; margin:0 auto; padding:6px 20px 4px; }
