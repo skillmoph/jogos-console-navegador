@@ -9,7 +9,15 @@
 </head>
 <body>
 <header class="hero">
+  <div class="apoc-hero" id="apoc-hero">
+    <div class="apoc-bg" id="apoc-bg"></div>
   <p class="eyebrow">Catálogo verificado em 29 de outubro de 2026 · 20 jogos + 5 experimentais</p>
+      <div class="apoc-tx">
+      <div class="apoc-kicker">catálogo de jogos no navegador</div>
+      <div class="apoc-title">Apocalipse Games</div>
+    </div>
+    <img class="apoc-ph" id="apoc-ph" alt="Foto de capa do site">
+  </div>
   <h1>Jogos de console no navegador</h1>
   <p class="sub">Clássicos de PS1, Xbox, N64, SNES, Mega Drive e NES adaptados pela comunidade para rodar na aba do navegador. Alguns pedem arquivos do seu próprio jogo (dizemos quais). Os botões abrem os sites dos projetos.</p>
   <details class="hero-note">
@@ -55,7 +63,9 @@
   <script src="covers-f.js"></script>
   <script src="covers-g.js"></script>
   <script src="covers-h.js"></script>
+<script src="hero-img.js"></script>
 <script src="data.js"></script>
+<script>document.getElementById("apoc-bg").style.backgroundImage="url('"+HERO_IMG+"')";document.getElementById("apoc-ph").src=HERO_IMG;</script>
 <script src="app.js"></script>
 </body>
 </html>
