@@ -81,7 +81,7 @@ function buildCarousel(){
       <div class="sl-fade"></div>
       <div class="sl-tx"><div class="sl-kick">catálogo de jogos no navegador</div>
       <div class="sl-title">Apocalipse Games</div>
-      <div class="sl-sub">Jogos de console adaptados pela comunidade para rodar na aba do navegador.</div></div>
+      <div class="sl-sub">João Gabriel, 10 anos, fundador do Apocalipse Games.</div></div>
       <img class="sl-ph" id="sl-ph" alt="Foto de capa do site"></div>`;
   feat.forEach(({g,i})=>{
     const src=coverUrl(g); const first=g.console.split(" / ")[0]; const k=kind(g);
