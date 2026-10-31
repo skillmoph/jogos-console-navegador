@@ -154,3 +154,15 @@ details.about .about-in strong{color:var(--tx)}
   #q-row:focus{border-color:var(--accent);outline:none}
   #car-dots{left:16px}
 }
+
+
+/* Banner Apocalipse Games (31/10/2026): arte gerada no ChatGPT do Andre aplicada ao slide principal */
+#sl-photo{filter:none;inset:0;background-position:center}
+#sl-ph{display:none}
+.photo-slide .sl-fade{background:linear-gradient(90deg,rgba(8,12,26,.55),rgba(8,12,26,.05) 55%,rgba(8,12,26,.2))}
+.photo-slide .sl-title{display:none}
+.photo-slide .sl-tx{max-width:44%}
+@media (max-width:640px){
+  .photo-slide{height:230px}
+  .photo-slide .sl-tx{display:none}
+}
