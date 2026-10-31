@@ -156,8 +156,9 @@ details.about .about-in strong{color:var(--tx)}
 }
 
 /* Banner Apocalipse Games (31/10/2026): capa no topo do site, como capa de canal. Arte gerada no ChatGPT do Andre. Foto do carrossel intacta. */
-#site-cover{background:#0b0b16}
+#site-cover{background:#0b0b16;margin-top:76px}
 #site-cover img{display:block;width:100%;height:auto;max-height:340px;object-fit:cover;object-position:center}
 @media (max-width:640px){
+  #site-cover{margin-top:64px}
   #site-cover img{max-height:none}
 }
