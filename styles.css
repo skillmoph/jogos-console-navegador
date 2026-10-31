@@ -155,10 +155,9 @@ details.about .about-in strong{color:var(--tx)}
   #car-dots{left:16px}
 }
 
-/* Banner Apocalipse Games (31/10/2026): arte gerada no ChatGPT do Andre, em slide proprio (separado da foto) */
-.banner-slide{background:#0b0b16}
-.banner-slide .bn-img{position:absolute;inset:0;background-size:cover;background-position:center}
+/* Banner Apocalipse Games (31/10/2026): capa no topo do site, como capa de canal. Arte gerada no ChatGPT do Andre. Foto do carrossel intacta. */
+#site-cover{background:#0b0b16}
+#site-cover img{display:block;width:100%;height:auto;max-height:340px;object-fit:cover;object-position:center}
 @media (max-width:640px){
-  .banner-slide{height:auto;aspect-ratio:1881/836}
-  .banner-slide .bn-img{background-size:contain;background-repeat:no-repeat;background-position:center}
+  #site-cover img{max-height:none}
 }
