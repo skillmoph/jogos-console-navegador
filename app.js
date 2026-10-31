@@ -83,9 +83,6 @@ function buildCarousel(){
       <div class="sl-title">Apocalipse Games</div>
       <div class="sl-sub">Jogos de console adaptados pela comunidade para rodar na aba do navegador.</div></div>
       <img class="sl-ph" id="sl-ph" alt="Foto de capa do site"></div>`;
-  if(typeof BANNER_IMG!=="undefined"){
-    html+=`<div class="slide banner-slide"><div class="bn-img" id="sl-banner"></div></div>`;
-  }
   feat.forEach(({g,i})=>{
     const src=coverUrl(g); const first=g.console.split(" / ")[0]; const k=kind(g);
     html+=`<div class="slide">
@@ -102,7 +99,7 @@ function buildCarousel(){
   });
   track.innerHTML=html;
   if(typeof HERO_IMG!=="undefined"){ $("#sl-photo").style.backgroundImage=`url('${HERO_IMG}')`; $("#sl-ph").src=HERO_IMG; }
-  if(typeof BANNER_IMG!=="undefined"){ const bb=$("#sl-banner"); if(bb) bb.style.backgroundImage=`url('${BANNER_IMG}')`; }
+  if(typeof BANNER_IMG!=="undefined"){ const sb=$("#site-banner"); if(sb) sb.src=BANNER_IMG; }
   track.querySelectorAll("[data-detalhe]").forEach(b=>b.onclick=()=>{ const i=+b.getAttribute("data-detalhe"); openModal(GAMES[i],i); });
   const dots=$("#car-dots"); dots.innerHTML="";
   track.querySelectorAll(".slide").forEach((_,n)=>{ const d=document.createElement("button"); d.className="cdot"; d.onclick=()=>goSlide(n); dots.appendChild(d); });
