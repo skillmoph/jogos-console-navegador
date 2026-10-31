@@ -162,5 +162,7 @@ details.about .about-in strong{color:var(--tx)}
 .photo-slide .sl-fade{background:linear-gradient(90deg,rgba(8,12,26,.55),rgba(8,12,26,.05) 55%,rgba(8,12,26,.2))}
 .photo-slide .sl-tx{display:none}
 @media (max-width:640px){
-  .photo-slide{height:230px}
+  .photo-slide{height:auto;aspect-ratio:1881/836;background:#0b0b16}
+  .photo-slide .sl-fade{display:none}
+  #sl-photo{background-size:contain;background-repeat:no-repeat;background-position:center}
 }
