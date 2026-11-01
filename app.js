@@ -39,7 +39,7 @@ function openModal(g,i){
     <div class="m-cons"><span class="dot" style="background:${dotFor(first)}"></span>${g.console} · ${g.year}${g.mp?' · ONLINE':''}</div>
     <h3>${g.title}</h3>
     <div class="m-meta">${g.genre} · ${g.method}</div>
-    <div class="m-badges"><span class="kb ${k.c}">${g.req}</span><span class="kb ok">${g.controls}</span></div>
+    <div class="m-badges"><span class="kb ${k.c}">${g.down?k.t:g.req}</span><span class="kb ok">${g.controls}</span></div>
     <p class="m-note">${g.note}</p>
     <div class="m-actions">
       ${g.down?`<span class="btn down-off">Indisponível</span>`:`<a class="btn ${g.exp?'exp':''}" href="${g.url}" target="_blank" rel="noopener">${g.exp?'Experimentar':'▶ Jogar'}</a>`}
