@@ -15,7 +15,7 @@ const I = {
 function iconFor(g){ const k=g.toLowerCase(); if(/tiro/.test(k))return I.tiro; if(/corrida/.test(k))return I.corrida; if(/rpg/.test(k))return I.rpg; if(/party/.test(k))return I.party; if(/plataforma/.test(k))return I.plataforma; if(/mundo/.test(k))return I.mundoaberto; if(/constru|sandbox/.test(k))return I.sandbox; if(/esporte/.test(k))return I.esporte; return I.aventura; }
 const state={console:"Todos",genre:"Todos",query:""};
 const dotFor=c=>DOT[c]||"#8ca3c3";
-function kind(g){ if(g.exp) return {t:"Experimental",c:"exp"}; if(/Exige|Importa|possuir|própria|próprio|ROM|XISO|ISO|pasta/i.test(g.req)) return {t:"BYO",c:"byo"}; return {t:"Direto",c:"ok"}; }
+function kind(g){ if(g.down) return {t:"Indisponível",c:"down"}; if(g.exp) return {t:"Experimental",c:"exp"}; if(/Exige|Importa|possuir|própria|próprio|ROM|XISO|ISO|pasta/i.test(g.req)) return {t:"BYO",c:"byo"}; return {t:"Direto",c:"ok"}; }
 function coverUrl(g){ return g.cover?(typeof COVERS!=="undefined"&&COVERS[g.cover]?COVERS[g.cover]:g.cover):null; }
 
 function cardEl(g,i){
@@ -42,7 +42,7 @@ function openModal(g,i){
     <div class="m-badges"><span class="kb ${k.c}">${g.req}</span><span class="kb ok">${g.controls}</span></div>
     <p class="m-note">${g.note}</p>
     <div class="m-actions">
-      <a class="btn ${g.exp?'exp':''}" href="${g.url}" target="_blank" rel="noopener">${g.exp?'Experimentar':'▶ Jogar'}</a>
+      ${g.down?`<span class="btn down-off">Indisponível</span>`:`<a class="btn ${g.exp?'exp':''}" href="${g.url}" target="_blank" rel="noopener">${g.exp?'Experimentar':'▶ Jogar'}</a>`}
       <a class="proj" href="${g.source}" target="_blank" rel="noopener">página do projeto</a>
     </div>`;
   m.classList.add("on"); document.body.style.overflow="hidden";
@@ -67,6 +67,7 @@ function renderChips(){
 /* carrossel */
 function heroWarn(g){
   const w=[];
+  if(g.down) w.push("indisponível desde "+g.down);
   if(g.exp) w.push("Experimental");
   if(/partida não testada/i.test(g.note)) w.push("partida não testada");
   if(/WebGPU/i.test(g.note)||/WebGPU/i.test(g.method)) w.push("requer Chrome/Edge com WebGPU");
@@ -74,7 +75,7 @@ function heroWarn(g){
 }
 let slideIdx=0, timer=null;
 function buildCarousel(){
-  const feat=GAMES.map((g,i)=>({g,i})).filter(({g})=>!g.exp).slice(0,3);
+  const feat=GAMES.map((g,i)=>({g,i})).filter(({g})=>!g.exp&&!g.down).slice(0,3);
   const track=$("#car-track"); track.innerHTML="";
   let html=`<div class="slide photo-slide">
       <div class="sl-bg" id="sl-photo"></div>
@@ -92,7 +93,7 @@ function buildCarousel(){
       <div class="sl-title">${g.title}</div>
       <div class="sl-sub">${g.genre} · ${g.method}</div>
       <div class="sl-ct"><span class="kb ${k.c}">${k.t}</span>
-      <a class="btn sm" href="${g.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ Jogar</a>
+      ${g.down?`<span class="btn sm down-off">Indisponível</span>`:`<a class="btn sm" href="${g.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ Jogar</a>`}
       <button class="btn sm ghost" data-detalhe="${i}">Detalhes</button></div>
       <div class="sl-warn">${heroWarn(g)}</div></div>
       <div class="sl-art" style="background-image:url('${src}')"></div></div>`;
@@ -120,7 +121,7 @@ function render(){
   renderChips();
   const main=$("#secoes"); main.innerHTML="";
   const list=filtered();
-  const jogos=list.filter(({g})=>!g.exp).length, exps=list.filter(({g})=>g.exp).length;
+  const jogos=list.filter(({g})=>!g.exp&&!g.down).length, exps=list.filter(({g})=>g.exp).length;
   const cnt=exps?`${jogos} jogos + ${exps} experimentais`:`${jogos} jogos`;
   $("#count").textContent=cnt; const tb=$("#count-tb"); if(tb) tb.textContent=cnt;
 
