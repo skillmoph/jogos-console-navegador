@@ -162,3 +162,6 @@ details.about .about-in strong{color:var(--tx)}
   #site-cover{margin-top:64px}
   #site-cover img{max-height:none}
 }
+
+.kb.down{border-color:rgba(255,91,91,.55);color:#ff9b9b}
+.btn.down-off{background:transparent;border:1.5px solid rgba(255,91,91,.55);color:#ff9b9b;cursor:default}
