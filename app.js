@@ -27,7 +27,7 @@ function cardEl(g,i){
     +`<span class="cvl"><span class="dot" style="background:${dotFor(first)}"></span>${g.console}</span>`
     +(g.mp?'<span class="mps">ONLINE</span>':'')+`</div>
     <div class="cbody"><div class="ct">${g.title}</div>
-    <div class="cm">${g.year} · ${g.genre}</div>
+    <div class="cm">${g.year?g.year+" · ":""}${g.genre}</div>
     <span class="kb ${k.c}">${k.t}</span></div>`;
   el.onclick=()=>openModal(g,i);
   return el;
@@ -36,7 +36,7 @@ function openModal(g,i){
   const m=$("#modal"); const src=coverUrl(g); const first=g.console.split(" / ")[0]; const k=kind(g);
   $("#m-cover").style.backgroundImage=src?`url('${src}')`:"none";
   $("#m-body").innerHTML=`
-    <div class="m-cons"><span class="dot" style="background:${dotFor(first)}"></span>${g.console} · ${g.year}${g.mp?' · ONLINE':''}</div>
+    <div class="m-cons"><span class="dot" style="background:${dotFor(first)}"></span>${g.console} ${g.year?(" · "+g.year):""}${g.mp?' · ONLINE':''}</div>
     <h3>${g.title}</h3>
     <div class="m-meta">${g.genre} · ${g.method}</div>
     <div class="m-badges"><span class="kb ${k.c}">${g.down?k.t:g.req}</span><span class="kb ok">${g.controls}</span></div>
@@ -89,7 +89,7 @@ function buildCarousel(){
     html+=`<div class="slide">
       <div class="sl-bg" style="background-image:url('${src}')"></div>
       <div class="sl-fade"></div>
-      <div class="sl-tx"><div class="sl-kick"><span class="dot" style="background:${dotFor(first)}"></span>${g.console} · ${g.year}</div>
+      <div class="sl-tx"><div class="sl-kick"><span class="dot" style="background:${dotFor(first)}"></span>${g.console} ${g.year?(" · "+g.year):""}</div>
       <div class="sl-title">${g.title}</div>
       <div class="sl-sub">${g.genre} · ${g.method}</div>
       <div class="sl-ct"><span class="kb ${k.c}">${k.t}</span>
@@ -171,3 +171,4 @@ function shortName(t){ return String(t||"").replace(/^\d+\.\s*/,""); }
 buildCarousel();
 render();
 })();
+
