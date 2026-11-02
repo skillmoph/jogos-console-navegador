@@ -1,174 +1,89 @@
-/* Apocalipse Games — renderer v3 (estrutura de catálogo de referência) */
+'use strict';
 (function(){
 const $=s=>document.querySelector(s);
-const DOT = { "PS1":"#e2574c","PS2":"#4c7dff","PS3":"#9a6bff","PS4":"#3fa9f5","Xbox":"#3dbb4c","Xbox 360":"#52d273","Xbox One":"#2ea34e","N64":"#e2824c","SNES":"#b48ce8","NES":"#c0c7d4","Mega Drive":"#5cc8d8","Saturn":"#8f9bb3","PC":"#34f2e8","Game Boy":"#a4c639","GBA":"#7ab648","GameCube":"#8a6bff","Switch":"#ff5b5b","PSP":"#66a3ff" };
-const I = {
- tiro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>',
- corrida:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4.5-5"/><circle cx="12" cy="15" r="1.6"/></svg>',
- aventura:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>',
- rpg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 9.5-8 11-4.5-1.5-8-6-8-11V5z"/></svg>',
- party:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="8" width="19" height="9" rx="4.5"/><circle cx="8" cy="12.5" r="1.3"/><circle cx="16" cy="11" r="1.1"/><circle cx="18" cy="13.5" r="1.1"/></svg>',
- plataforma:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="11" y="9" width="6" height="6" rx="1"/><rect x="17" y="3" width="5" height="5" rx="1"/></svg>',
- mundoaberto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3L3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5z"/><path d="M9 3v15M15 5.5v15"/></svg>',
- sandbox:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/><rect x="8" y="4" width="8" height="8" rx="1"/></svg>',
- esporte:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>' };
-function iconFor(g){ const k=g.toLowerCase(); if(/tiro/.test(k))return I.tiro; if(/corrida/.test(k))return I.corrida; if(/rpg/.test(k))return I.rpg; if(/party/.test(k))return I.party; if(/plataforma/.test(k))return I.plataforma; if(/mundo/.test(k))return I.mundoaberto; if(/constru|sandbox/.test(k))return I.sandbox; if(/esporte/.test(k))return I.esporte; return I.aventura; }
-const state={console:"Todos",genre:"Todos",query:""};
-const dotFor=c=>DOT[c]||"#8ca3c3";
-function kind(g){ if(g.down) return {t:"Indisponível",c:"down"}; if(g.exp) return {t:"Experimental",c:"exp"}; if(/Exige|Importa|possuir|própria|próprio|ROM|XISO|ISO|pasta/i.test(g.req)) return {t:"BYO",c:"byo"}; return {t:"Direto",c:"ok"}; }
-function coverUrl(g){ return g.cover?(typeof COVERS!=="undefined"&&COVERS[g.cover]?COVERS[g.cover]:g.cover):null; }
-
-function cardEl(g,i){
-  const el=document.createElement("article"); el.className="card";
-  const src=coverUrl(g); const first=g.console.split(" / ")[0]; const k=kind(g);
-  el.innerHTML=(src
-    ?`<div class="cover" style="background-image:url('${src}')">`
-    :`<div class="cover ph"><div class="pt">${g.title}</div>`)
-    +`<span class="cvl"><span class="dot" style="background:${dotFor(first)}"></span>${g.console}</span>`
-    +(g.mp?'<span class="mps">ONLINE</span>':'')+`</div>
-    <div class="cbody"><div class="ct">${g.title}</div>
-    <div class="cm">${g.year?g.year+" · ":""}${g.genre}</div>
-    <span class="kb ${k.c}">${k.t}</span></div>`;
-  el.onclick=()=>openModal(g,i);
-  return el;
+const PAGE_SIZE=20;let page=1;
+let games=[],platform='Todos',status='all',auditFilter='all',view='catalog',query='',sort='featured',genre='Todos';
+const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))||f}catch{return f}};
+let favorites=new Set(read('apocalipse-favorites',[])),recent=read('apocalipse-recent',[]);
+const save=()=>{try{localStorage.setItem('apocalipse-favorites',JSON.stringify([...favorites]));localStorage.setItem('apocalipse-recent',JSON.stringify(recent))}catch{}$('#fav-count').textContent=favorites.size};
+const clean=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const labels={direct:'Acesso direto',experimental:'Experimental',files:'Arquivos próprios',down:'Indisponível'};
+const auditLabels={tested:'Partida testada',untested:'Não testada'};
+function coverUrl(g){return typeof COVERS!=='undefined'&&COVERS[g.cover]?COVERS[g.cover]:g.cover}
+function build(){
+ games=GAMES.map((g,i)=>{
+  const imported=/Importado do cat/.test(g.note);
+  const st=g.down?'down':g.exp?'experimental':/Exige|Importa|possuir|própria|próprio|ROM|XISO|ISO|pasta/i.test(g.req||'')?'files':'direct';
+  const tested=!imported&&/testad/i.test(g.note)&&!/não testada|nao testada/i.test(g.note);
+  const plats=g.console.split(' / ');
+  return Object.assign({},g,{id:String(i),idx:i,status:st,audit:tested?'tested':'untested',imported,plats,platform:plats[0],cover:coverUrl(g)});
+ });
 }
-function openModal(g,i){
-  const m=$("#modal"); const src=coverUrl(g); const first=g.console.split(" / ")[0]; const k=kind(g);
-  $("#m-cover").style.backgroundImage=src?`url('${src}')`:"none";
-  $("#m-body").innerHTML=`
-    <div class="m-cons"><span class="dot" style="background:${dotFor(first)}"></span>${g.console} ${g.year?(" · "+g.year):""}${g.mp?' · ONLINE':''}</div>
-    <h3>${g.title}</h3>
-    <div class="m-meta">${g.genre} · ${g.method}</div>
-    <div class="m-badges"><span class="kb ${k.c}">${g.down?k.t:g.req}</span><span class="kb ok">${g.controls}</span></div>
-    <p class="m-note">${g.note}</p>
-    <div class="m-actions">
-      ${g.down?`<span class="btn down-off">Indisponível</span>`:`<a class="btn ${g.exp?'exp':''}" href="${g.url}" target="_blank" rel="noopener">${g.exp?'Experimentar':'▶ Jogar'}</a>`}
-      <a class="proj" href="${g.source}" target="_blank" rel="noopener">página do projeto</a>
-    </div>`;
-  m.classList.add("on"); document.body.style.overflow="hidden";
-}
-function closeModal(){ $("#modal").classList.remove("on"); document.body.style.overflow=""; }
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-
-function filtered(){ const q=state.query.trim().toLowerCase(); return GAMES.map((g,i)=>({g,i})).filter(({g})=>(state.console==="Todos"||g.console.split(" / ").includes(state.console))&&(state.genre==="Todos"||g.genre===state.genre)&&(!q||(g.title+" "+g.console+" "+g.genre).toLowerCase().includes(q))); }
-
-function renderChips(){
-  const cr=$("#chips"); cr.innerHTML="";
-  const cons=[...new Set(GAMES.flatMap(g=>g.console.split(" / ")))];
-  const mk=(label,n,dot)=>{ const b=document.createElement("button"); b.className="chip";
-    b.innerHTML=(dot?`<span class="dot" style="background:${dot}"></span>`:"")+`${label}<span class="n">${n}</span>`;
-    b.setAttribute("aria-pressed",state.console===label?"true":"false");
-    b.onclick=()=>{ state.console=(state.console===label&&label!=="Todos")?"Todos":label; render(); };
-    cr.appendChild(b); };
-  mk("Todos",GAMES.length,null);
-  cons.forEach(c=>mk(c,GAMES.filter(g=>g.console.split(" / ").includes(c)).length,dotFor(c)));
-}
-
-/* carrossel */
-function heroWarn(g){
-  const w=[];
-  if(g.down) w.push("indisponível desde "+g.down);
-  if(g.exp) w.push("Experimental");
-  if(/partida não testada/i.test(g.note)) w.push("partida não testada");
-  if(/WebGPU/i.test(g.note)||/WebGPU/i.test(g.method)) w.push("requer Chrome/Edge com WebGPU");
-  return w.length?("⚠ "+w.join(" · ")):"";
-}
-let slideIdx=0, timer=null;
-function buildCarousel(){
-  const feat=GAMES.map((g,i)=>({g,i})).filter(({g})=>!g.exp&&!g.down).slice(0,3);
-  const track=$("#car-track"); track.innerHTML="";
-  let html=`<div class="slide photo-slide">
-      <div class="sl-bg" id="sl-photo"></div>
-      <div class="sl-fade"></div>
-      <div class="sl-tx"><div class="sl-kick">catálogo de jogos no navegador</div>
-      <div class="sl-title">Apocalipse Games</div>
-      <div class="sl-sub">João Gabriel, 10 anos, fundador do Apocalipse Games.</div></div>
-      <img class="sl-ph" id="sl-ph" alt="Foto de capa do site"></div>`;
-  feat.forEach(({g,i})=>{
-    const src=coverUrl(g); const first=g.console.split(" / ")[0]; const k=kind(g);
-    html+=`<div class="slide">
-      <div class="sl-bg" style="background-image:url('${src}')"></div>
-      <div class="sl-fade"></div>
-      <div class="sl-tx"><div class="sl-kick"><span class="dot" style="background:${dotFor(first)}"></span>${g.console} ${g.year?(" · "+g.year):""}</div>
-      <div class="sl-title">${g.title}</div>
-      <div class="sl-sub">${g.genre} · ${g.method}</div>
-      <div class="sl-ct"><span class="kb ${k.c}">${k.t}</span>
-      ${g.down?`<span class="btn sm down-off">Indisponível</span>`:`<a class="btn sm" href="${g.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ Jogar</a>`}
-      <button class="btn sm ghost" data-detalhe="${i}">Detalhes</button></div>
-      <div class="sl-warn">${heroWarn(g)}</div></div>
-      <div class="sl-art" style="background-image:url('${src}')"></div></div>`;
-  });
-  track.innerHTML=html;
-  if(typeof HERO_IMG!=="undefined"){ $("#sl-photo").style.backgroundImage=`url('${HERO_IMG}')`; $("#sl-ph").src=HERO_IMG; }
-  if(typeof BANNER_IMG!=="undefined"){ const sb=$("#site-banner"); if(sb) sb.src=BANNER_IMG; }
-  track.querySelectorAll("[data-detalhe]").forEach(b=>b.onclick=()=>{ const i=+b.getAttribute("data-detalhe"); openModal(GAMES[i],i); });
-  const dots=$("#car-dots"); dots.innerHTML="";
-  track.querySelectorAll(".slide").forEach((_,n)=>{ const d=document.createElement("button"); d.className="cdot"; d.onclick=()=>goSlide(n); dots.appendChild(d); });
-  goSlide(0);
-  clearInterval(timer); timer=setInterval(()=>goSlide((slideIdx+1)%track.children.length),6000);
-  $("#car-prev").onclick=()=>goSlide((slideIdx-1+track.children.length)%track.children.length);
-  $("#car-next").onclick=()=>goSlide((slideIdx+1)%track.children.length);
-}
-function goSlide(n){
-  const track=$("#car-track"); slideIdx=n;
-  track.style.transform=`translateX(-${n*100}%)`;
-  [...$("#car-dots").children].forEach((d,i)=>d.classList.toggle("on",i===n));
-}
-
-function sec(t){ const s=document.createElement("section"); s.className="bloco"; s.innerHTML=`<h2>${t}<span class="seta">›</span></h2>`; return s; }
-
+const matchesPlatform=g=>platform==='Todos'||g.plats.includes(platform);
+const matchesAudit=g=>auditFilter==='all'||g.audit===auditFilter;
+const matchesSearch=g=>clean([g.title,g.genre,g.console].join(' ')).includes(clean(query));
+function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('#toast').classList.remove('show'),2500)}
+function openGame(id){recent=[id,...recent.filter(x=>x!==id)].slice(0,20);save();if(view==='recent')render()}
 function render(){
-  renderChips();
-  const main=$("#secoes"); main.innerHTML="";
-  const list=filtered();
-  const jogos=list.filter(({g})=>!g.exp&&!g.down).length, exps=list.filter(({g})=>g.exp).length;
-  const cnt=exps?`${jogos} jogos + ${exps} experimentais`:`${jogos} jogos`;
-  $("#count").textContent=cnt; const tb=$("#count-tb"); if(tb) tb.textContent=cnt;
-
-  if(state.console==="Todos"&&state.genre==="Todos"&&!state.query.trim()){
-    const cats={}; GAMES.forEach(g=>cats[g.genre]=(cats[g.genre]||0)+1);
-    const cs=sec("Categorias"); const grid=document.createElement("div"); grid.className="catgrid";
-    Object.keys(cats).sort((a,b)=>cats[b]-cats[a]).forEach(nm=>{
-      const d=document.createElement("button"); d.className="cat";
-      d.innerHTML=`<span class="ic">${iconFor(nm)}</span><span class="nm">${nm}</span><span class="ct">${cats[nm]}</span>`;
-      d.onclick=()=>{ state.genre=nm; render(); };
-      grid.appendChild(d);
-    });
-    cs.appendChild(grid); main.appendChild(cs);
-    [...new Set(list.map(({g})=>g.genre))].forEach(gn=>{
-      const items=list.filter(({g})=>g.genre===gn);
-      const s=sec(gn); const r=document.createElement("div"); r.className=items.length>4?"row":"grid5";
-      items.forEach(({g,i})=>r.appendChild(cardEl(g,i)));
-      s.appendChild(r); main.appendChild(s);
-    });
-  } else {
-    const s=sec(state.query.trim()?("Busca: \u201c"+state.query.trim()+"\u201d"):(state.genre!=="Todos"?state.genre:state.console));
-    const b=document.createElement("button"); b.className="chip"; b.textContent="‹ Voltar para tudo";
-    b.onclick=()=>{ state.genre="Todos"; state.console="Todos"; state.query=""; const q1=document.getElementById("q-top"),q2=document.getElementById("q-row"); if(q1)q1.value=""; if(q2)q2.value=""; render(); };
-    s.querySelector("h2").appendChild(b);
-    const g2=document.createElement("div"); g2.className="grid5";
-    list.forEach(({g,i})=>g2.appendChild(cardEl(g,i)));
-    s.appendChild(g2); main.appendChild(s);
-  }
+ const platCounts={};games.forEach(g=>g.plats.forEach(p=>platCounts[p]=(platCounts[p]||0)+1));
+ const shown=Object.keys(platCounts).sort((a,b)=>platCounts[b]-platCounts[a]);
+ $('#filters').innerHTML=['Todos',...shown].map(p=>`<button data-platform="${esc(p)}" aria-pressed="${p===platform}" class="${p===platform?'active':''}">${p==='Todos'?'Todas as plataformas':esc(p)} <span class="filter-count">${p==='Todos'?games.length:platCounts[p]}</span></button>`).join('');
+ $('#platform-nav').innerHTML=shown.slice(0,14).map(p=>`<button class="platform-nav" data-platform="${esc(p)}" aria-pressed="${p===platform}"><b></b>${esc(p)}<span class="side-count">${platCounts[p]}</span></button>`).join('');
+ const base=g=>matchesPlatform(g)&&matchesAudit(g)&&(genre==='Todos'||g.genre===genre)&&matchesSearch(g);
+ document.querySelectorAll('[data-status]').forEach(b=>{const sp=b.querySelector('span');if(sp)sp.textContent=games.filter(g=>base(g)&&(b.dataset.status==='all'||g.status===b.dataset.status)).length});
+ $('#crumb').textContent=view==='favorites'?'Meus favoritos':view==='recent'?'Abertos recentemente':view==='added'?'Adicionados recentemente':'Descobrir';
+ $('#view-title').childNodes[0].textContent=view==='favorites'?'Seus jogos favoritos':view==='recent'?'Volte para a partida':view==='added'?'Adicionados recentemente':'Todos os jogos';
+ const list=games.filter(g=>base(g)&&(view!=='catalog'||status==='all'||g.status===status)&&(view!=='favorites'||favorites.has(g.id))&&(view!=='recent'||recent.includes(g.id))&&(view!=='added'||g.imported));
+ if(sort==='name')list.sort((a,b)=>a.title.localeCompare(b.title,'pt-BR'));
+ else if(sort==='platform')list.sort((a,b)=>a.platform.localeCompare(b.platform)||a.title.localeCompare(b.title,'pt-BR'));
+ else if(view==='recent')list.sort((a,b)=>recent.indexOf(a.id)-recent.indexOf(b.id));
+ else if(sort==='added'||view==='added')list.sort((a,b)=>b.idx-a.idx);
+ else list.sort((a,b)=>(a.imported-b.imported)||(a.down-b.down)||(a.exp?1:0)-(b.exp?1:0)||a.idx-b.idx);
+ $('#total').textContent=list.length;
+ const tp=Math.max(1,Math.ceil(list.length/PAGE_SIZE));page=Math.min(Math.max(1,page),tp);
+ const pg=list.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE);
+ $('#page-summary').textContent=list.length?`${(page-1)*PAGE_SIZE+1}–${Math.min(page*PAGE_SIZE,list.length)} de ${list.length} jogos`:'';
+ $('#pagination').hidden=list.length<=PAGE_SIZE;
+ $('#pagination').innerHTML=`<button data-page="${page-1}" ${page===1?'disabled':''}>← Anterior</button><span class="page-state">Página ${page} de ${tp}</span>${Array.from({length:tp},(_,i)=>`<button data-page="${i+1}" ${page===i+1?'aria-current="page"':''}>${i+1}</button>`).join('')}<button data-page="${page+1}" ${page===tp?'disabled':''}>Próxima →</button>`;
+ $('#grid').innerHTML=pg.map(g=>{const off=g.status==='down';return `<article class="game-card"><a ${off?'role="button" aria-disabled="true" tabindex="-1"':`href="${esc(g.url)}"`} class="cover-link ${off?'unavailable':''}" target="_blank" rel="noopener noreferrer" data-game="${g.id}" aria-label="Abrir ${esc(g.title)} no site do projeto"><span class="cvfallback">${esc(g.title)}</span><img src="${esc(g.cover)}" alt="Capa de ${esc(g.title)}" loading="lazy" style="position:relative;z-index:1" onerror="this.style.display='none'"><div class="play-overlay"><span>▶</span></div><span class="platform-badge">${esc(g.console.length>26?g.platform:g.console)}</span></a><button class="fav-button" data-fav="${g.id}" aria-label="Favoritar ${esc(g.title)}" aria-pressed="${favorites.has(g.id)}">${favorites.has(g.id)?'♥':'♡'}</button><div class="game-meta"><span>${esc(g.genre)}</span><span class="${g.status==='direct'?'available':g.status==='experimental'?'warning':'neutral'}">${labels[g.status]}</span></div><h3>${esc(g.title)}</h3><p class="origin-meta">${g.year?esc(g.year)+' · ':''}${esc(g.console)}</p><p class="access-mode-label">No navegador${g.mp?' · online':''}${g.imported?' · adicionado em 02/11/2026':''}</p><p class="audit-label audit-${g.audit}">${auditLabels[g.audit]}</p><div class="card-bottom"><a class="card-play" ${off?'aria-disabled="true" role="button"':`href="${esc(g.url)}" target="_blank" rel="noopener noreferrer" data-game="${g.id}"`}>${off?'Link indisponível':g.audit==='untested'?'Abrir projeto':'Abrir jogo'} <span>↗</span></a><button class="details-button" data-details="${g.id}" aria-label="Informações de ${esc(g.title)}">ⓘ</button></div></article>`}).join('');
+ $('#empty').hidden=!!list.length;
+ $('#empty-text').textContent=view==='favorites'?'Toque no coração de um jogo para guardá-lo aqui. Seus favoritos ficam neste navegador.':view==='recent'?'Os jogos que você abrir pelo catálogo aparecerão aqui.':'Tente outro nome, plataforma ou resultado de teste.';
+ $('#collection-note').innerHTML=view==='added'?'<span>✦</span><p><strong>Novos neste lote.</strong> 221 jogos importados em 02/11/2026. Ainda não re-verificados por nós: o destino não foi conferido e a partida não foi testada.</p>':status==='experimental'?'<span>ⓘ</span><p><strong>Há limitações conhecidas.</strong> O próprio projeto informa que o jogo só inicia ou tem problemas. Abra ⓘ antes de jogar.</p>':status==='files'?'<span>ⓘ</span><p><strong>Precisam de uma cópia própria.</strong> O projeto pede arquivos do seu jogo antes da partida.</p>':'<span>ⓘ</span><p><strong>Abrir o link não comprova que a partida funciona.</strong> Confira o resultado do teste em cada ficha. Os jogos importados em 02/11 ainda não foram testados por nós.</p>';
+ document.querySelectorAll('[data-platform]').forEach(b=>{b.classList.toggle('active',b.dataset.platform===platform);b.setAttribute('aria-pressed',b.dataset.platform===platform)});
+ document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+ $('.status-tabs').hidden=view!=='catalog';
+ document.querySelectorAll('[data-status]').forEach(b=>b.setAttribute('aria-selected',b.dataset.status===status));
+ $('#added-count').textContent=games.filter(g=>g.imported).length;save();
 }
-
-function shortName(t){ return String(t||"").replace(/^\d+\.\s*/,""); }
-/* bindings busca */
-(function(){
-  function wire(id){ var el=document.getElementById(id); if(!el) return;
-    el.addEventListener("input",function(){ state.query=el.value; var o=el.id==="q-top"?document.getElementById("q-row"):document.getElementById("q-top"); if(o&&o.value!==el.value)o.value=el.value; render(); if(el.value.trim()){ document.getElementById("secoes").scrollIntoView({behavior:"smooth",block:"start"}); } });
-  }
-  wire("q-top"); wire("q-row");
-})();
-/* bindings topbar/modal */
-(function(){
-  var h=document.getElementById("btn-howto"); if(h) h.onclick=function(){ document.getElementById("howto").classList.toggle("on"); };
-  var v=document.getElementById("btn-all"); if(v) v.onclick=function(){ document.getElementById("chips").scrollIntoView({behavior:"smooth"}); };
-  var b=document.getElementById("brand"); if(b) b.onclick=function(e){ e.preventDefault(); window.scrollTo({top:0,behavior:"smooth"}); };
-  var mc=document.getElementById("m-close"); if(mc) mc.onclick=function(){ document.getElementById("modal").classList.remove("on"); document.body.style.overflow=""; };
-  var bk=document.querySelector("#modal .bk"); if(bk) bk.onclick=function(){ document.getElementById("modal").classList.remove("on"); document.body.style.overflow=""; };
-})();
-buildCarousel();
+function details(g){$('#detail-body').innerHTML=`<div class="detail-top"><img src="${esc(g.cover)}" alt="Capa de ${esc(g.title)}"><div class="detail-copy"><span class="eyebrow">${esc(g.console)} · ${esc(g.genre)}</span><h2>${esc(g.title)}</h2><p>${esc(g.method)}</p><p>${g.year?'Ano do original: '+esc(g.year)+' · ':''}${esc(g.req)}</p><p>Controles: ${esc(g.controls)}${g.mp?' · online':''}</p></div></div><div class="detail-warning"><p><strong>${auditLabels[g.audit]}</strong><br>${esc(g.note)}</p></div><div class="detail-actions">${g.status==='down'?'<span class="disabled-link">Link indisponível nesta revisão</span>':`<a class="primary" data-game="${g.id}" target="_blank" rel="noopener noreferrer" href="${esc(g.url)}">${g.exp?'Experimentar':g.audit==='untested'?'Abrir projeto':'Abrir jogo'} ↗</a>`}<a class="source-link" href="${esc(g.source)}" target="_blank" rel="noopener noreferrer">Página do projeto</a></div>`;$('#details').showModal()}
+function about(){$('#detail-body').innerHTML=`<span class="eyebrow">SEM COMPLICAÇÃO</span><h2>Escolha um jogo. Abra o projeto.</h2><p>O Apocalipse Games é um catálogo de links. Clicar na capa ou em “Abrir jogo” abre o site do projeto em outra aba. O projeto pode pedir mais um clique em “Jogar”, tempo de carregamento ou arquivos próprios.</p><p>Use Chrome ou Edge atualizado em um computador. O desempenho depende do jogo, do navegador e do aparelho.</p><p>O coração salva favoritos neste navegador. “Abertos recentemente” guarda os últimos links que você abriu, o que não indica que o jogo iniciou. Nenhum jogo, ISO ou BIOS é hospedado aqui. Salvo indicação na ficha, os projetos não são oficiais das donas dos jogos.</p>`;$('#details').showModal()}
+document.addEventListener('click',e=>{
+ const pager=e.target.closest('[data-page]');if(pager){if(pager.disabled)return;page=Number(pager.dataset.page);render();$('#collection').scrollIntoView({behavior:'smooth'});return}
+ const fav=e.target.closest('[data-fav]');if(fav){const id=fav.dataset.fav;favorites.has(id)?favorites.delete(id):favorites.add(id);save();render();toast(favorites.has(id)?'Adicionado aos favoritos':'Removido dos favoritos');return}
+ const det=e.target.closest('[data-details]');if(det){details(games.find(g=>g.id===det.dataset.details));return}
+ const p=e.target.closest('[data-platform]');if(p){platform=p.dataset.platform;status='all';page=1;render();return}
+ const st=e.target.closest('[data-status]');if(st){status=st.dataset.status;page=1;render();return}
+ const v=e.target.closest('[data-view]');if(v){view=v.dataset.view;platform='Todos';page=1;render();$('#collection').scrollIntoView({behavior:'smooth'});return}
+ const g=e.target.closest('[data-game]');if(g){const en=games.find(x=>x.id===g.dataset.game);if(en&&en.status==='down'){e.preventDefault();return}openGame(g.dataset.game)}
+});
+$('#audit-filter').addEventListener('change',e=>{auditFilter=e.target.value;page=1;render()});
+$('#genre').addEventListener('change',e=>{genre=e.target.value;page=1;render()});
+$('#search').addEventListener('input',e=>{query=e.target.value;page=1;render()});
+$('#sort').addEventListener('change',e=>{sort=e.target.value;page=1;render()});
+$('#reset').onclick=()=>{page=1;query='';$('#search').value='';platform='Todos';status='all';auditFilter='all';$('#audit-filter').value='all';view='catalog';genre='Todos';$('#genre').value='Todos';render()};
+$('#hero-play').onclick=e=>{e.preventDefault();$('#collection').scrollIntoView({behavior:'smooth'})};
+$('#howto-btn').onclick=()=>$('#about-section').scrollIntoView({behavior:'smooth'});
+$('#about-btn').onclick=about;$('#sources-btn').onclick=about;
+$('.close').onclick=()=>$('#details').close();
+$('#details').addEventListener('click',e=>{if(e.target===$('#details')){const r=$('#details').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('#details').close()}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&!$('#details').open){e.preventDefault();$('#search').focus()}});
+build();
+const valid=new Set(games.map(g=>g.id));favorites=new Set([...favorites].filter(i=>valid.has(i)));recent=recent.filter(i=>valid.has(i));
+$('#search').placeholder=`Buscar entre ${games.length} jogos...`;
+$('#genre').innerHTML='<option value="Todos">Todos os gêneros</option>'+[...new Set(games.map(g=>g.genre))].sort((a,b)=>a.localeCompare(b,'pt-BR')).map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');
+if(typeof HERO_IMG!=='undefined')$('#hero-photo').src=HERO_IMG;
+if(typeof BANNER_IMG!=='undefined')$('#site-banner').src=BANNER_IMG;else $('#site-banner-wrap').hidden=true;
+const feat=games.find(g=>g.title.indexOf('Most Wanted')>-1&&g.cover)||games[0];$('#hero-cover').src=feat.cover;
 render();
 })();
-
