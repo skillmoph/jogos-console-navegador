@@ -1,82 +1,12 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apocalipse Games — jogos de console no navegador</title>
-<meta name="description" content="Jogos de PS1, Xbox, N64, PS2 e mais adaptados pela comunidade para rodar direto no navegador. Destinos conferidos um a um, sem instalar nada.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<div id="site-cover"><img id="site-banner" alt="Banner Apocalipse Games"></div>
-<nav id="topbar">
-  <a class="brand" id="brand" href="#"><span class="mark">A</span>Apocalipse<em>Games</em></a>
-  <span id="count-tb"></span>
-  <span class="sp"></span>
-  <input id="q-top" type="search" placeholder="Buscar jogo..." aria-label="Buscar jogo">
-  <button class="tb" id="btn-howto">Como esta lista foi feita</button>
-  <button class="tb cta" id="btn-all">Ver jogos</button>
-</nav>
-<div class="wrap">
-  <div class="headline">
-    <h1>Jogos de console, direto no navegador.</h1>
-    <p>Clássicos e ports recentes de PS1, Xbox, N64, SNES, Mega Drive, PS2 e mais, adaptados pela comunidade para rodar na aba do navegador. Alguns pedem arquivos do seu próprio jogo (dizemos quais).</p>
-  </div>
-  <div id="howto"><p><strong>Como esta lista foi feita:</strong> cada destino foi aberto e conferido um a um. Confirmamos que a página oferece o jogo no navegador e quais são os requisitos; as partidas em si nem sempre foram testadas, então algum jogo pode falhar na hora de rodar. Salvo indicação no card, os projetos não são oficiais das donas dos jogos.</p>
-<p style="margin-top:8px">Em 02/11/2026, a pedido do André, importamos 221 jogos do catálogo Caji Games (caji-games.vercel.app). Esses cards chegam marcados como não re-verificados na própria ficha: o destino ainda não foi conferido por nós e a partida não foi testada.</p>
-<p style="margin-top:8px">Detalhes de cada jogo (procedência, requisitos, origem dos arquivos) ficam no card expandido: clique em qualquer capa.</p></div>
-  <div id="car">
-    <div id="car-track"></div>
-    <button id="car-prev" aria-label="anterior">&#8249;</button>
-    <button id="car-next" aria-label="próximo">&#8250;</button>
-    <div id="car-dots"></div>
-  </div>
-  <div id="q-wrap"><input id="q-row" type="search" placeholder="Buscar jogo..." aria-label="Buscar jogo"></div>
-  <div id="chips"></div>
-  <p id="count"></p>
-  <main id="secoes"></main>
-  <details class="about" id="about"><summary><strong>Sobre esta coleção — o que ficou de fora e por quê</strong></summary><div class="about-in">
-    
-    <p>Esta coleção lista jogos de console adaptados pela comunidade para rodar no navegador: projetos de código aberto, versões clean-room sem ROM distribuída, páginas que exigem seus próprios arquivos e ports comunitários cujos sites distribuem os arquivos do jogo (avisado no card). Não confirmamos o licenciamento de nenhum destino: salvo indicação no card, os projetos não são oficiais das donas dos jogos. Candidatos que ficaram de fora até agora:</p>
-    <ul>
-      <li><strong>Ainda não re-verificados:</strong> Tekken 5, SSX 3, Formula One 06, WWE SmackDown vs RAW e PES 6 foram avaliados antes do critério atual (o catálogo é só de links). Voltam à lista quando os destinos forem conferidos de novo.</li>
-      <li><strong>Fora do ar hoje:</strong> as versões clean-room de Mario Kart 64, F-Zero X, Banjo-Kazooie, Super Mario World, Super Mario Bros e Pokémon Red/Blue estão fora do ar (erro 404) na data da verificação — voltam à lista se retornarem.</li>
-      <li><strong>Página anunciada, mas não hospedada:</strong> Zelda Oracle of Ages e Oracle of Seasons (GBC) constam como "Playable" no catálogo, mas a própria página diz que não há versão hospedada.</li>
-      <li><strong>Estágio experimental ("boots"):</strong> Majora's Mask, Doom 64, Donkey Kong 64, Mario Party 3 e Pokémon Stadium 2 estão na grade marcados como Experimental porque o próprio projeto informa "boots, testes leves". Super Smash Bros, Banjo-Tooie, Conker, Pokémon Snap e vários de GBA ficam de fora por só ligarem.</li>
-      <li><strong>Fora do ar ou não confirmados:</strong> NBA 2K12 (site indisponível), Skate 3 (página não confirma o jogo), Super Mario 64 Multiplayer (falha de conexão no site).</li>
-      <li><strong>Procedência duvidosa:</strong> supostos ports de GTA V e Cyberpunk 2077 para navegador sem método publicado. Não recomendamos.</li>
-      <li><strong>Não é site para jogar:</strong> Gran Turismo 4 de PS2 roda no navegador por recompilação, mas o projeto gera a página no seu computador a partir do seu disco — não existe um link pronto.</li>
-    </ul>
-    <p>Conforme os projetos amadurecerem, o licenciamento for confirmado e novos ports forem verificados, esta lista cresce.</p>
-  </div></details>
-  <footer><p>Artes de capa: arquivos dos artigos correspondentes na Wikipédia (upload.wikimedia.org), usadas para identificação; capas do Minecraft, do NFS Most Wanted solo e dos jogos adicionados em 31/10 (rede .online, MK9, ValoCard, PLAY-CS): arte/captura das próprias páginas dos projetos.</p>
-  <p>Catálogo independente, sem fins lucrativos. Os nomes dos jogos pertencem aos seus donos. Nenhum jogo é hospedado aqui: os botões abrem os sites de cada projeto. Verificado em 29 e 30/10/2026; em 31/10/2026 adicionados Guitar Hero III e 10 links de jogos vistos nos Reels do perfil @kzlat0 (God of War: Chains of Olympus, Burnout 3, Def Jam: Fight for NY, MK: Shaolin Monks, FIFA Street, Mortal Kombat 9, Half-Life 2, DBZ: Budokai Tenkaichi 3, CS 1.6 e Valorant Simulator). Páginas conferidas, partidas não testadas. Em 02/11/2026 foram importados 221 jogos do catálogo Caji Games (caji-games.vercel.app), marcados como não re-verificados nos cards; as capas desses jogos são servidas pelo próprio Caji Games.</p></footer>
-</div>
-<div id="modal"><div class="bk"></div><div class="box"><button id="m-close" aria-label="fechar">&#10005;</button><div id="m-cover"></div><div id="m-body"></div></div></div>
-
-<script src="covers-a.js"></script>
-<script src="covers-b.js"></script>
-<script src="covers-c.js"></script>
-<script src="covers-d.js"></script>
-<script src="covers-e.js"></script>
-<script src="covers-f.js"></script>
-<script src="covers-g.js"></script>
-<script src="covers-h.js"></script>
-<script src="covers-i.js"></script>
-<script src="covers-j.js"></script>
-<script src="covers-k.js"></script>
-<script src="covers-l.js"></script>
-<script src="covers-m.js"></script>
-<script src="covers-n.js"></script>
-<script src="covers-o.js"></script>
-<script src="covers-p.js"></script>
-<script src="covers-q.js"></script>
-<script src="covers-r.js"></script>
-<script src="hero-img.js"></script>
-<script src="data.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a1122"><meta name="description" content="Jogos de console adaptados pela comunidade para rodar no navegador. Capas, favoritos e links diretos para os projetos."><title>Apocalipse Games — jogos de console no navegador</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2334f2e8'/%3E%3Cpath d='M32 14 16 48h8l8-20 8 20h8z' fill='%23052a28'/%3E%3C/svg%3E"><link rel="stylesheet" href="styles.css"></head><body>
+<aside class="sidebar"><a class="brand" href="./" aria-label="Apocalipse Games início"><span class="mark">A</span>Apocalipse<em>Games</em></a><span class="side-label">SUA PRÓXIMA PARTIDA</span><nav><button class="nav-item active" data-view="catalog"><span>▦</span> Descobrir </button><button class="nav-item" data-view="favorites"><span>♡</span> Meus favoritos <i id="fav-count">0</i></button><button class="nav-item" data-view="added"><span>✦</span> Adicionados recentemente <i id="added-count">0</i></button><button class="nav-item" data-view="recent"><span>↺</span> Abertos recentemente</button></nav><div class="side-divider"></div><span class="side-label">PLATAFORMAS</span><div id="platform-nav"></div><div class="side-bottom"><span class="tiny-light"></span> Uma coleção, muitas histórias.<p>Projetos da comunidade.<br>Um catálogo só de links.</p><button id="about-btn">Como funciona ↗</button></div></aside>
+<div class="workspace"><header class="topbar"><div class="breadcrumb">Apocalipse Games <span>/</span> <strong id="crumb">Descobrir</strong></div><label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Buscar jogos por nome..." autocomplete="off" aria-label="Buscar jogos"><kbd>/</kbd></label><div class="profile" title="Apocalipse Games">A</div></header>
+<main><div id="site-banner-wrap"><img id="site-banner" alt="Banner Apocalipse Games"></div>
+<section class="hero"><div class="hero-copy"><span class="eyebrow"><span></span> CONSOLE. NOVA ABA.</span><h1>Jogos de console,<br>direto no <em>navegador.</em></h1><p>Clássicos e ports da comunidade para PS1, PS2, Xbox, N64, PSP e mais.<br>Escolha a capa, abra o projeto e jogue na aba do navegador.</p><div class="hero-actions"><a href="#collection" class="primary" id="hero-play"><span>▶</span> Ver jogos <span>↓</span></a><button id="howto-btn" class="text-button">Como esta lista foi feita</button></div><div class="hero-foot"><span>LINKS</span> Nenhum jogo é hospedado aqui <span class="dot">·</span> Confira o resultado do teste em cada ficha</div></div><div class="hero-art" aria-hidden="true"><div class="orb"></div><div class="poster poster-back"><img id="hero-cover" alt=""></div><div class="poster poster-photo"><img id="hero-photo" alt=""></div><div class="float-tag"><span>✦</span> João Gabriel, 10 anos, fundador.</div><span class="art-number">APOCALIPSE / GAMES</span></div></section>
+<section class="collection" id="collection"><div class="section-heading"><div><span class="eyebrow muted">ESCOLHA SEU PRÓXIMO PLAY</span><h2 id="view-title">Todos os jogos<span id="total"></span></h2></div><label class="genre-label"><span>Gênero</span><select id="genre" aria-label="Filtrar por gênero"><option value="Todos">Todos os gêneros</option></select></label><label class="sort-label">Ordenar por <select id="sort" aria-label="Ordenar jogos"><option value="featured">Destaques</option><option value="added">Adicionados recentemente</option><option value="name">Nome A–Z</option><option value="platform">Plataforma</option></select></label></div>
+<div class="platform-filter-heading" hidden><label>Filtrar plataforma por <select id="platform-mode" aria-label="Critério de plataforma"><option value="original">Jogo original</option><option value="project">Versão do projeto</option></select></label><span>Veja também o tipo de acesso de cada jogo</span></div><div class="filter-row" id="filters" aria-label="Filtrar por plataforma"></div><label class="audit-filter-label">Resultado do teste <select id="audit-filter" aria-label="Filtrar por resultado do teste"><option value="all">Todos os resultados</option><option value="tested">Partida testada</option><option value="untested">Não testada</option></select></label><div class="status-tabs" role="tablist" aria-label="Tipo de acesso"><button role="tab" data-status="all" aria-selected="true">Todos os jogos <span></span></button><button role="tab" data-status="direct" aria-selected="false">Acesso direto <span></span></button><button role="tab" data-status="experimental" aria-selected="false">Em teste <span></span></button><button role="tab" data-status="files" aria-selected="false">Requer arquivos <span></span></button></div>
+<div class="collection-note" id="collection-note"><span>ⓘ</span><p><strong>Acesso documentado pelos projetos.</strong> Confira os resultados do teste nas fichas. Abertura do link não comprova início da partida.</p></div>
+<p class="page-summary" id="page-summary" aria-live="polite"></p><div id="grid" class="game-grid" aria-live="polite"></div><div id="empty" class="empty" hidden><span>⌕</span><h3>Nenhum jogo por aqui. Ainda.</h3><p id="empty-text"></p><button class="primary" id="reset">Ver coleção completa</button></div><nav id="pagination" class="pagination" aria-label="Páginas do catálogo"></nav></section>
+<section class="platform-truth"><div><span class="eyebrow muted">UM CATÁLOGO TRANSPARENTE</span><h2>A capa chama. O teste confirma.</h2><p>Jogos clássicos, ports e projetos comunitários, com a origem identificada em cada ficha.</p></div><div class="truth-grid"><article><span class="truth-icon">◎</span><h3>Versão do projeto</h3><p>Os filtros diferenciam a plataforma do jogo original e a versão usada no navegador. Isso não comprova emulação do console.</p></article><article><span class="truth-icon">✓</span><h3>Resultado do teste</h3><p>“Funcionando” exige início de partida. Projetos novos ficam como “Não verificado” até concluir o teste de gameplay e comandos.</p></article><article><span class="truth-icon">↗</span><h3>Origem de cada jogo</h3><p>O catálogo abre os sites dos projetos. O botão ⓘ mostra requisitos, limitações e fonte, sem instalar programas no seu aparelho.</p></article></div></section>
+<section class="research-section" id="about-section"><span class="eyebrow muted">TRANSPARÊNCIA</span><h2>Como esta lista foi feita.</h2><p>Os 101 primeiros jogos foram conferidos um a um: abrimos o destino e anotamos requisitos e limites na ficha; 62 tiveram a partida testada. Em 02/11/2026 foram importados 221 jogos do catálogo Caji Games. Esses chegam marcados como não re-verificados: o destino ainda não foi conferido por nós e a partida não foi testada.</p><p>Salvo indicação na ficha, os projetos não são oficiais das donas dos jogos. O catálogo é independente e só tem links.</p></section><footer><a class="brand small" href="./">▶ Apocalipse<em>Games</em></a><span>Capas e jogos pertencem aos seus titulares. Os jogos abrem nos sites dos projetos. Catálogo independente, sem fins lucrativos.</span><button id="sources-btn">Como funciona ↗</button></footer></main></div>
+<nav class="mobile-nav" aria-label="Navegação da coleção"><button class="active" data-view="catalog">▦ Descobrir</button><button data-view="favorites">♡ Favoritos</button><button data-view="added">✦ Adicionados</button><button data-view="recent">↺ Abertos</button></nav><dialog id="details"><button class="close" aria-label="Fechar detalhes">×</button><div id="detail-body"></div></dialog><div id="toast" role="status"></div><script src="covers-a.js"></script><script src="covers-b.js"></script><script src="covers-c.js"></script><script src="covers-d.js"></script><script src="covers-e.js"></script><script src="covers-f.js"></script><script src="covers-g.js"></script><script src="covers-h.js"></script><script src="covers-i.js"></script><script src="covers-j.js"></script><script src="covers-k.js"></script><script src="covers-l.js"></script><script src="covers-m.js"></script><script src="covers-n.js"></script><script src="covers-o.js"></script><script src="covers-p.js"></script><script src="covers-q.js"></script><script src="covers-r.js"></script><script src="hero-img.js"></script><script src="data.js"></script><script src="app.js"></script></body></html>
